@@ -10,12 +10,12 @@ import (
 )
 
 type User struct {
-	ID uint `gorm:"primaryKey"`
+	ID uint `gorm:"column:id;primaryKey"` 
 	Name  string `gorm:"column:name"`
 	Email     string `gorm:"column:email"`
-	Age  string `gorm:"column:age"`
-	CreatedAt time.Time `gorm:"column:created_at"`
-	UpdatedAt time.Time `gorm:"column:updated_at"`
+	Age  int `gorm:"column:age"`
+	CreatedAt time.Time `gorm:"column:createdAt"`
+	UpdatedAt time.Time `gorm:"column:updatedAt"`
 }
 
 
@@ -34,14 +34,14 @@ func main() {
 		c.JSON(http.StatusOK, users)
 	})
 
-	router.GET("/v1/users/:id", func(c *gin.Context) {
+	router.GET("/v1/user/:id", func(c *gin.Context) {
 		id := c.Param("id")
 		var user User
 		db.First(&user, id)
 		c.JSON(http.StatusOK, user)
 	})
 
-	router.PUT("/v1/users/:id", func(c *gin.Context) {
+	router.PUT("/v1/user/:id", func(c *gin.Context) {
 		id := c.Param("id")
 		var user User
 		db.First(&user, id)
@@ -53,7 +53,7 @@ func main() {
 		c.JSON(http.StatusOK, user)
 	})
 
-	router.DELETE("/v1/users/:id", func(c *gin.Context) {	
+	router.DELETE("/v1/user/:id", func(c *gin.Context) {	
 		id := c.Param("id")
 		var user User
 		db.First(&user, id)
